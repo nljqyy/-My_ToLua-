@@ -4,7 +4,8 @@ using System.Collections;
 using Object = UnityEngine.Object;
 using LuaFramework;
 
-public enum EPageType
+//面板 父类
+public enum EPagePosType
 {
     None,
     Normal,
@@ -12,14 +13,15 @@ public enum EPageType
     Fixed,
     Toppest,
 }
-
-public enum EPageMode
+//面板隐藏 模式
+public enum EPageHideMode
 {
     DoNothing,
     HideOtherOnly,
     HideOtherAndNeedBack,
 }
 
+//面板状态
 public enum EPageState
 {
     NONE,
@@ -47,12 +49,12 @@ public sealed class XPage
     public string m_loadPath;
     public GameObject m_pageInst;
     public Transform m_pageTrans;
-    public EPageType m_pageType = EPageType.None;
-    public EPageMode m_pageMode = EPageMode.DoNothing;
+    public EPagePosType m_pageType = EPagePosType.None;
+    public EPageHideMode m_pageMode = EPageHideMode.DoNothing;
     public EPageState m_currState = EPageState.NONE;
 
     private string m_luaPageCtrl;
-    private string m_luaPageView;
+    private string m_luaPagePanel;
 
     //delegate load ui function.
     public Func<string, Object> delegateSyncLoadUI = null;
@@ -67,7 +69,7 @@ public sealed class XPage
     public void Awake()
     {
         m_luaPageCtrl = m_pageName + "Ctrl";
-        m_luaPageView = m_pageName + "View";
+        m_luaPagePanel = m_pageName + "Panel";
         //Debug.LogError("call lua awake :(" + m_pageName + "Ctrl)");
         Util.CallMethod(m_luaPageCtrl, "Awake", this);
 
@@ -82,7 +84,7 @@ public sealed class XPage
         m_pageInst.gameObject.SetActive(true);
         AnchorUIGameObject();
         //Debug.LogError("call lua start :(" + m_pageName + "Ctrl)");
-        Util.CallMethod(m_luaPageView, "Start", this.m_pageInst);
+        Util.CallMethod(m_luaPagePanel, "Start", this.m_pageInst);
         Util.CallMethod(m_luaPageCtrl, "Start");
     }
 
@@ -186,6 +188,27 @@ public sealed class XPage
         }
     }
 
+    public void LoadAsync(ResourceManager ResManager, Action<GameObject> callback)
+    {
+        string assetName = m_luaPagePanel;
+        string abName = m_pageName.ToLower() + AppConst.ExtName;
+        ResManager.LoadPrefab(abName, assetName, delegate (UnityEngine.Object[] objs)
+        {
+            if (objs.Length == 0) return;
+            GameObject prefab = objs[0] as GameObject;
+            if (prefab == null) return;
+
+           GameObject go = prefab != null ? GameObject.Instantiate(prefab) as GameObject : null;
+            m_pageInst = go;
+            m_pageTrans = go.transform;
+            if (callback != null)
+                callback(go);
+            Debug.LogWarning("CreatePanel::>> " + m_pageName + " " + prefab);
+        });
+
+    }
+
+
     protected void AnchorUIGameObject()
     {
         if (XPageRoot.Instance == null || m_pageInst == null)
@@ -209,20 +232,20 @@ public sealed class XPage
             scale = ui.transform.localScale;
         }
 
-        EPageType type = this.m_pageType;
-        if (type == EPageType.Normal)
+        EPagePosType type = this.m_pageType;
+        if (type == EPagePosType.Normal)
         {
             ui.transform.SetParent(XPageRoot.Instance.normalRoot);
         }
-        else if (type == EPageType.PopUp)
+        else if (type == EPagePosType.PopUp)
         {
             ui.transform.SetParent(XPageRoot.Instance.popupRoot);
         }
-        else if (type == EPageType.Fixed)
+        else if (type == EPagePosType.Fixed)
         {
             ui.transform.SetParent(XPageRoot.Instance.fixedRoot);
         }
-        else if (type == EPageType.Toppest)
+        else if (type == EPagePosType.Toppest)
         {
             ui.transform.SetParent(XPageRoot.Instance.ToppestRoot);
         }

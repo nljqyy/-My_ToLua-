@@ -2167,6 +2167,8 @@ namespace LuaInterface
             LuaDLL.tolua_pushtraceback(L);
             int oldTop = LuaGetTop();
 
+            //这个地方是调用的LuaStatePtr里面的LuaLoadBuffer函数
+            //最终调用LuaDLL.luaL_loadbuffer完成加载
             if (LuaLoadBuffer(buffer, buffer.Length, chunkName) == 0)
             {
                 if (LuaPCall(0, LuaDLL.LUA_MULTRET, oldTop) == 0)

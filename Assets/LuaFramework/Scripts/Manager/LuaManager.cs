@@ -21,10 +21,15 @@ namespace LuaFramework {
         }
 
         public void InitStart() {
+            //设置lua脚本路径
             InitLuaPath();
+            //加载lua脚本的AssetBundle,并记录在字典里面
             InitLuaBundle();
+            //启动lua虚拟机
             this.lua.Start();    //启动LUAVM
+            //开始执行lua main函数
             this.StartMain();
+            //lua的主循环开始执行
             this.StartLooper();
         }
 

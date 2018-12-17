@@ -40,11 +40,21 @@ function subGet(childNode, typeName)
 	return child(childNode):GetComponent(typeName);
 end
 
-function findPanel(str) 
+function findPanel(str)
 	local obj = find(str);
 	if obj == nil then
 		error(str.." is null");
 		return nil;
 	end
 	return obj:GetComponent("BaseLua");
+end
+
+--创建枚举
+function CreateEnumTable(tbl, index)
+	local enumtbl = {}
+	local enumindex = index or 0
+	for i, v in ipairs(tbl) do
+		enumtbl[v] = enumindex + i
+	end
+	return enumtbl
 end

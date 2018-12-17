@@ -1,14 +1,14 @@
 
 CtrlNames = {
 	Prompt = "PromptCtrl",
-	Message = "MessageCtrl"
+	Message = "MessageCtrl",
+	Head ="HeadCtrl",
 }
+PanelNames=
+{
+	Head="Head"
 
-PanelNames = {
-	"PromptPanel",	
-	"MessagePanel",
 }
-
 --协议类型--
 ProtocalType = {
 	BINARY = 0,
@@ -29,8 +29,8 @@ resMgr = LuaHelper.GetResManager();
 panelMgr = LuaHelper.GetPanelManager();
 soundMgr = LuaHelper.GetSoundManager();
 networkMgr = LuaHelper.GetNetManager();
-
-xpageMgr=XPageMgr.Inst;  --ui管理器
+xpageMgr=LuaHelper.GetXPageManager();
+atlasMgr=LuaHelper.GetAtlasManager();
 
 WWW = UnityEngine.WWW;
 GameObject = UnityEngine.GameObject;

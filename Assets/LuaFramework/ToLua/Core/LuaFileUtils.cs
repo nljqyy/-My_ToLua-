@@ -153,6 +153,8 @@ namespace LuaInterface
             return null;
         }
 
+        //如果beZip为false,就是不是打包的资源,FindFile函数会从搜索目录列表里面查找文件
+        //如果beZip为true,ReadZipFile函数从AssetBundle里面读取文件,  
         public virtual byte[] ReadFile(string fileName)
         {
             if (!beZip)
@@ -229,6 +231,9 @@ namespace LuaInterface
 
             using (CString.Block())
             {
+                //注意这里的操作,如果在lua脚本里面使用require引用模块
+                //一定要加上路径,这个路径相对于AppConst里面的LuaTempDir目录
+                //例如require "3rd/pbc/protobuf"
                 CString sb = CString.Alloc(256);
                 sb.Append("lua");
                 int pos = fileName.LastIndexOf('/');

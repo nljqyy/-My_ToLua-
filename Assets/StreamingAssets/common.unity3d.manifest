@@ -1,0 +1,17 @@
+ManifestFileVersion: 0
+CRC: 3899125898
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 0014e2deff8b9d1614230915aa5c0061
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3f7d0c5e0986ec71841622bcb2f9be1c
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sounds/Common/right_voice2.mp3
+- Assets/Sounds/Common/Loading_voice.mp3
+Dependencies: []

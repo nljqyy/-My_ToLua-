@@ -10,6 +10,7 @@ public enum SuffixEnum
     Png,
     Csv,
     Txt,
+    Mp3,
 }
 
 public class AddBuildMapUtility : EditorWindow
@@ -157,6 +158,8 @@ public class AddBuildMapUtility : EditorWindow
                 return "*.csv";
             case SuffixEnum.Txt:
                 return "*.txt";
+            case SuffixEnum.Mp3:
+                return "*.mp3";
             default:
                 return "null";
         }

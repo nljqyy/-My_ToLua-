@@ -63,9 +63,8 @@ public static class CustomSettings
               
          //------自定义类型--------  
         _GT(typeof(XPage)),
-        _GT(typeof(XPageMgr)),
-        _GT(typeof(EPageType)),
-        _GT(typeof(EPageMode)),
+        _GT(typeof(EPagePosType)),
+        _GT(typeof(EPageHideMode)),
         _GT(typeof(EventTriggerListener)),
          //------自定义类型--------   
 
@@ -182,6 +181,8 @@ public static class CustomSettings
         _GT(typeof(ThreadManager)),
         _GT(typeof(NetworkManager)),
         _GT(typeof(ResourceManager)),
+        _GT(typeof(AtlasManager)),
+        _GT(typeof(XPageManager)),
     };
 
     public static List<Type> dynamicList = new List<Type>()

@@ -201,7 +201,7 @@ namespace LuaFramework {
                     int i = Application.dataPath.LastIndexOf('/');
                     return Application.dataPath.Substring(0, i + 1) + game + "/";
                 }
-                return "c:/" + game + "/";
+                return "e:/" + game + "/";
             }
         }
 

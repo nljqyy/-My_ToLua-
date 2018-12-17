@@ -50,6 +50,21 @@ namespace LuaFramework {
             return AppFacade.Instance.GetManager<SoundManager>(ManagerName.Sound);
         }
 
+        /// <summary>
+        /// UI管理器
+        /// </summary>
+        public static XPageManager GetXPageManager()
+        {
+            return AppFacade.Instance.GetManager<XPageManager>(ManagerName.XPage);
+        }
+
+        /// <summary>
+        /// 图集管理器
+        /// </summary>
+        public static AtlasManager GetAtlasManager()
+        {
+            return AppFacade.Instance.GetManager<AtlasManager>(ManagerName.Atlas);
+        }
 
         /// <summary>
         /// pbc/pblua函数回调

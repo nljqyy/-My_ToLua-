@@ -39,9 +39,9 @@ public class XPageRoot : MonoBehaviour
         Canvas can = go.AddComponent<Canvas>();
         can.renderMode = RenderMode.ScreenSpaceCamera;
         can.pixelPerfect = true;
-        GameObject camObj = new GameObject("GuiCamera");
+        GameObject camObj = new GameObject("MainCamera");
         camObj.layer = LayerMask.NameToLayer("UI");
-        camObj.tag = "GuiCamera";
+        camObj.tag = "MainCamera";
         camObj.transform.parent = go.transform;
         camObj.transform.localPosition = new Vector3(0, 0, -100f);
         Camera cam = camObj.AddComponent<Camera>();
@@ -113,6 +113,7 @@ public class XPageRoot : MonoBehaviour
     {
         GameObject go = new GameObject("canvas");
         go.transform.parent = root;
+        go.transform.localScale = Vector3.one;
         go.layer = LayerMask.NameToLayer("UI");
 
         Canvas can = go.AddComponent<Canvas>();

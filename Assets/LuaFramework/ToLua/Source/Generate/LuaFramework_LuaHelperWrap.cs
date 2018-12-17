@@ -12,6 +12,8 @@ public class LuaFramework_LuaHelperWrap
 		L.RegFunction("GetResManager", GetResManager);
 		L.RegFunction("GetNetManager", GetNetManager);
 		L.RegFunction("GetSoundManager", GetSoundManager);
+		L.RegFunction("GetXPageManager", GetXPageManager);
+		L.RegFunction("GetAtlasManager", GetAtlasManager);
 		L.RegFunction("OnCallLuaFunc", OnCallLuaFunc);
 		L.RegFunction("OnJsonCallFunc", OnJsonCallFunc);
 		L.EndStaticLibs();
@@ -90,6 +92,38 @@ public class LuaFramework_LuaHelperWrap
 			ToLua.CheckArgsCount(L, 0);
 			LuaFramework.SoundManager o = LuaFramework.LuaHelper.GetSoundManager();
 			ToLua.Push(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetXPageManager(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			XPageManager o = LuaFramework.LuaHelper.GetXPageManager();
+			ToLua.PushSealed(L, o);
+			return 1;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int GetAtlasManager(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 0);
+			AtlasManager o = LuaFramework.LuaHelper.GetAtlasManager();
+			ToLua.PushSealed(L, o);
 			return 1;
 		}
 		catch (Exception e)

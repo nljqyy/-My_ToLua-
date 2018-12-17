@@ -25,6 +25,7 @@ namespace LuaFramework {
         void Init() {
             DontDestroyOnLoad(gameObject);  //防止销毁自己
 
+            //首先完成资源的加载和释放(资源都是打包的,需要释放到Util.DataPath目录)
             CheckExtractResource(); //释放资源
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             Application.targetFrameRate = AppConst.GameFrameRate;
@@ -231,40 +232,48 @@ namespace LuaFramework {
         }
 
         void OnInitialize() {
+
+            //这里还应该有其他的东西需要设置
+            //要根据游戏的开发后期再加
             LuaManager.InitStart();
             LuaManager.DoFile("Logic/Game");         //加载游戏
             LuaManager.DoFile("Logic/Network");      //加载网络
             NetManager.OnInit();                     //初始化网络
+
+            //初始化完成,调用lua脚本里面的OnInitOK方法
+            //游戏进入正常循环
             Util.CallMethod("Game", "OnInitOK");     //初始化完成
 
             initialize = true;
 
-            //类对象池测试
-            var classObjPool = ObjPoolManager.CreatePool<TestObjectClass>(OnPoolGetElement, OnPoolPushElement);
+            #region 框架自动测试 对象池数据
+          //类对象池测试
+           // var classObjPool = ObjPoolManager.CreatePool<TestObjectClass>(OnPoolGetElement, OnPoolPushElement);
             //方法1
             //objPool.Release(new TestObjectClass("abcd", 100, 200f));
             //var testObj1 = objPool.Get();
 
             //方法2
-            ObjPoolManager.Release<TestObjectClass>(new TestObjectClass("abcd", 100, 200f));
-            var testObj1 = ObjPoolManager.Get<TestObjectClass>();
+           // ObjPoolManager.Release<TestObjectClass>(new TestObjectClass("abcd", 100, 200f));
+           // var testObj1 = ObjPoolManager.Get<TestObjectClass>();
 
-            Debugger.Log("TestObjectClass--->>>" + testObj1.ToString());
+           // Debugger.Log("TestObjectClass--->>>" + testObj1.ToString());
 
             //游戏对象池测试
-            var prefab = Resources.Load("TestGameObjectPrefab", typeof(GameObject)) as GameObject;
-            var gameObjPool = ObjPoolManager.CreatePool("TestGameObject", 5, 10, prefab);
+            //var prefab = Resources.Load("TestGameObjectPrefab", typeof(GameObject)) as GameObject;
+            //var gameObjPool = ObjPoolManager.CreatePool("TestGameObject", 5, 10, prefab);
 
-            var gameObj = Instantiate(prefab) as GameObject;
-            gameObj.name = "TestGameObject_01";
-            gameObj.transform.localScale = Vector3.one;
-            gameObj.transform.localPosition = Vector3.zero;
+            //var gameObj = Instantiate(prefab) as GameObject;
+            //gameObj.name = "TestGameObject_01";
+            //gameObj.transform.localScale = Vector3.one;
+            //gameObj.transform.localPosition = Vector3.zero;
 
-            ObjPoolManager.Release("TestGameObject", gameObj);
-            var backObj = ObjPoolManager.Get("TestGameObject");
-            backObj.transform.SetParent(null);
+            //ObjPoolManager.Release("TestGameObject", gameObj);
+            //var backObj = ObjPoolManager.Get("TestGameObject");
+            //backObj.transform.SetParent(null);
 
-            Debug.Log("TestGameObject--->>>" + backObj);
+            //Debug.Log("TestGameObject--->>>" + backObj);
+ #endregion
         }
 
         /// <summary>

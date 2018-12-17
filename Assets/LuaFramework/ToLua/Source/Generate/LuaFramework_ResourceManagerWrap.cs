@@ -9,6 +9,7 @@ public class LuaFramework_ResourceManagerWrap
 		L.BeginClass(typeof(LuaFramework.ResourceManager), typeof(Manager));
 		L.RegFunction("Initialize", Initialize);
 		L.RegFunction("LoadPrefab", LoadPrefab);
+		L.RegFunction("LoadAudioClip", LoadAudioClip);
 		L.RegFunction("UnloadAssetBundle", UnloadAssetBundle);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
@@ -71,6 +72,25 @@ public class LuaFramework_ResourceManagerWrap
 			{
 				return LuaDLL.luaL_throw(L, "invalid arguments to method: LuaFramework.ResourceManager.LoadPrefab");
 			}
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int LoadAudioClip(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 4);
+			LuaFramework.ResourceManager obj = (LuaFramework.ResourceManager)ToLua.CheckObject<LuaFramework.ResourceManager>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			string arg1 = ToLua.CheckString(L, 3);
+			System.Action<UnityEngine.Object[]> arg2 = (System.Action<UnityEngine.Object[]>)ToLua.CheckDelegate<System.Action<UnityEngine.Object[]>>(L, 4);
+			obj.LoadAudioClip(arg0, arg1, arg2);
+			return 0;
 		}
 		catch (Exception e)
 		{

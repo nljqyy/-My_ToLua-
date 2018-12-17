@@ -25,9 +25,9 @@ local gameObject;
 local WWW = UnityEngine.WWW;
 
 function Game.InitViewPanels()
-	for i = 1, #PanelNames do
-		require ("View/"..tostring(PanelNames[i]))
-	end
+    for i, v in pairs(PanelNames) do
+        require ("View/"..tostring(v).."Panel")
+    end
 end
 
 --初始化完成，发送链接服务器信息--
@@ -37,16 +37,19 @@ function Game.OnInitOK()
     networkMgr:SendConnect();
 
     --注册LuaView--
+   -- PanelNames= CreateEnumTable(PanelNames);
     this.InitViewPanels();
+
     --this.test_pblua_func();
     --coroutine.start(this.test_coroutine);
 
     CtrlManager.Init();
-    local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
-    if ctrl ~= nil and AppConst.ExampleMode == 1 then
-       ctrl:Awake();
-    end
-       
+    --local ctrl = CtrlManager.GetCtrl(CtrlNames.Prompt);
+    --if ctrl ~= nil and AppConst.ExampleMode == 1 then
+     -- ctrl:Awake();
+    -- end
+    xpageMgr:ShowPage(PanelNames.Head);
+    soundMgr:PlaySound("common","right_voice2");
     logWarn('LuaFramework InitOK--->>>');
 end
 

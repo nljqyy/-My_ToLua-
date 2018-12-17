@@ -58,6 +58,12 @@ namespace LuaFramework {
             LoadAsset<GameObject>(abName, assetNames, null, func);
         }
 
+        //载入音效资源
+        public void LoadAudioClip(string abName, string assetName, Action<UObject[]> func)
+        {
+            LoadAsset<AudioClip>(abName, new string[] { assetName }, func);
+        }
+
         string GetRealAssetPath(string abName) {
             if (abName.Equals(AppConst.AssetDir)) {
                 return abName;

@@ -1,4 +1,2 @@
-cube.unity3d,*.prefab,Assets/Prefabs/Cube
-ui.unity3d,*.prefab,Assets/Prefabs/UI
-message.unity3d,*.prefab,Assets/LuaFramework/Examples/Builds/Message
-prompt.unity3d,*.prefab,Assets/LuaFramework/Examples/Builds/Prompt
+head.unity3d,*.prefab,Assets/Prefabs/UI/Head
+common.unity3d,*.mp3,Assets/Sounds/Common

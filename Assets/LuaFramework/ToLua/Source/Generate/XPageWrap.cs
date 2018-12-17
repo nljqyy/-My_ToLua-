@@ -156,11 +156,27 @@ public class XPageWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			XPage obj = (XPage)ToLua.CheckObject(L, 1, typeof(XPage));
-			System.Action<UnityEngine.GameObject> arg0 = (System.Action<UnityEngine.GameObject>)ToLua.CheckDelegate<System.Action<UnityEngine.GameObject>>(L, 2);
-			obj.LoadAsync(arg0);
-			return 0;
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 2)
+			{
+				XPage obj = (XPage)ToLua.CheckObject(L, 1, typeof(XPage));
+				System.Action<UnityEngine.GameObject> arg0 = (System.Action<UnityEngine.GameObject>)ToLua.CheckDelegate<System.Action<UnityEngine.GameObject>>(L, 2);
+				obj.LoadAsync(arg0);
+				return 0;
+			}
+			else if (count == 3)
+			{
+				XPage obj = (XPage)ToLua.CheckObject(L, 1, typeof(XPage));
+				LuaFramework.ResourceManager arg0 = (LuaFramework.ResourceManager)ToLua.CheckObject<LuaFramework.ResourceManager>(L, 2);
+				System.Action<UnityEngine.GameObject> arg1 = (System.Action<UnityEngine.GameObject>)ToLua.CheckDelegate<System.Action<UnityEngine.GameObject>>(L, 3);
+				obj.LoadAsync(arg0, arg1);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: XPage.LoadAsync");
+			}
 		}
 		catch (Exception e)
 		{
@@ -253,7 +269,7 @@ public class XPageWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			XPage obj = (XPage)o;
-			EPageType ret = obj.m_pageType;
+			EPagePosType ret = obj.m_pageType;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -272,7 +288,7 @@ public class XPageWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			XPage obj = (XPage)o;
-			EPageMode ret = obj.m_pageMode;
+			EPageHideMode ret = obj.m_pageMode;
 			ToLua.Push(L, ret);
 			return 1;
 		}
@@ -424,7 +440,7 @@ public class XPageWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			XPage obj = (XPage)o;
-			EPageType arg0 = (EPageType)ToLua.CheckObject(L, 2, typeof(EPageType));
+			EPagePosType arg0 = (EPagePosType)ToLua.CheckObject(L, 2, typeof(EPagePosType));
 			obj.m_pageType = arg0;
 			return 0;
 		}
@@ -443,7 +459,7 @@ public class XPageWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			XPage obj = (XPage)o;
-			EPageMode arg0 = (EPageMode)ToLua.CheckObject(L, 2, typeof(EPageMode));
+			EPageHideMode arg0 = (EPageHideMode)ToLua.CheckObject(L, 2, typeof(EPageHideMode));
 			obj.m_pageMode = arg0;
 			return 0;
 		}
